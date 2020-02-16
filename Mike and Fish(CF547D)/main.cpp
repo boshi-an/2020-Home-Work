@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const int MX = 1000005;
+const int MX = 1200005;
 
 int n;
 int fst[MX], nxt[MX], v[MX], deg[MX], lnum;
@@ -30,15 +30,16 @@ void addeg(int nu, int nv)
 
 bool vis[MX];
 bool usd[MX];
+bool walked[MX];
 
 void euler_path(int x)
 {
 	vis[x] = 1;
-	for(int i=fst[x]; i; i=nxt[i])
+	for(int i=fst[x]; ~i; i=nxt[i])
 	{
-		int ni = nxt[i];
-		fst[x] = ni;
-		if(!vis[v[i]]) euler_path(v[i]), usd[i] = 1;
+		fst[x] = i;
+		if(!walked[i]) walked[i] = walked[i^1] = 1, euler_path(v[i]), usd[i] = 1;
+		i = fst[x];
 	}
 }
 
@@ -63,7 +64,7 @@ void input()
 			euler_path(i);
 	for(int i=0; i<n*2; i+=2)
 		if(usd[i]) putchar('r');
-		else putchar('b');
+		else putchar('b'), assert(usd[i+1]);
 	putchar('\n');
 }
 
