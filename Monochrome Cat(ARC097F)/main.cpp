@@ -66,7 +66,6 @@ void work()
 {
 	dfs(root, 0);
 	calc(root, 0);
-	//cout<<ans<<" "<<mxl<<endl;
 	printf("%d\n", ans-mxl);
 }
 
