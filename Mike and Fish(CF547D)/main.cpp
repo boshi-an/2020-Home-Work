@@ -45,6 +45,10 @@ void input()
 		addeg(x, 2e5+y);
 		addeg(2e5+y, x);
 	}
+	vector<int> odd;
+	for(int i=1; i<=4e5; i++)
+		if(deg[i] & 1)
+			odd.push_back(i);
 }
 
 int main()
