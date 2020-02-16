@@ -29,10 +29,17 @@ void addeg(int nu, int nv)
 }
 
 bool vis[MX];
+bool usd[MX];
 
 void euler_path(int x)
 {
-
+	vis[x] = 1;
+	for(int i=fst[x]; i; i=nxt[i])
+	{
+		int ni = nxt[i];
+		fst[x] = ni;
+		if(!vis[v[i]]) euler_path(v[i]), usd[i] = 1;
+	}
 }
 
 void input()
@@ -49,6 +56,15 @@ void input()
 	for(int i=1; i<=4e5; i++)
 		if(deg[i] & 1)
 			odd.push_back(i);
+	for(int i=0; i<odd.size(); i+=2)
+		addeg(odd[i], odd[i+1]), addeg(odd[i+1], odd[i]);
+	for(int i=1; i<=4e5; i++)
+		if(!vis[i])
+			euler_path(i);
+	for(int i=0; i<n*2; i+=2)
+		if(usd[i]) putchar('r');
+		else putchar('b');
+	putchar('\n');
 }
 
 int main()
